@@ -1,8 +1,32 @@
 "use strict";
 
 var expect = require( "chai" ).expect,
-    htmlcommenttemplate = require( "../lib/htmlcommentemplate.js" );
+    fs = require( "fs" ),
+    shell = require( "shelljs" ),
+    htmlcommentemplate = require( "../lib/htmlcommentemplate.js" );
 
-describe( "htmlcommenttemplate()", function(){
-    it( "progress..", function(){ expect.fail() } );
+describe( "htmlcommentemplate( pathToTemplatesDir )", function(){
+
+    before( prepareSampleFiles );
+//    after( deleteSampleFiles );
+
+    it( "progress..", function( done ){
+
+        htmlcommentemplate( ".tmp/sample/htdocs/index.html", function(){
+            done();
+            expect.fail();
+        } );
+
+
+    } );
 } );
+
+function prepareSampleFiles(){
+    deleteSampleFiles();
+    shell.mkdir( ".tmp" );
+    shell.cp( "-r", "./test/sample", ".tmp" );
+}
+
+function deleteSampleFiles(){
+    shell.rm( "-rf", ".tmp/sample" )
+}
