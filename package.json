@@ -1,0 +1,28 @@
+{
+  "name": "htmlcommentemplate",
+  "version": "0.0.0",
+  "description": "Template Engine with HTML Comment tags.",
+  "main": "./lib/htmlcommentemplate.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test/htmlcommentemplate.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daikiueda/htmlcommentemplate.git"
+  },
+  "keywords": [
+    "HTML",
+    "template",
+    "Dreamweaver"
+  ],
+  "author": "daikiueda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daikiueda/htmlcommentemplate/issues"
+  },
+  "homepage": "https://github.com/daikiueda/htmlcommentemplate",
+  "devDependencies": {
+    "chai": "^2.1.1",
+    "mocha": "^2.1.0"
+  }
+}
