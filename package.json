@@ -1,14 +1,14 @@
 {
-  "name": "htmlcommentemplate",
+  "name": "htmlcommenttemplate",
   "version": "0.0.0",
   "description": "Template Engine with HTML Comment tags.",
-  "main": "./lib/htmlcommentemplate.js",
+  "main": "./lib/htmlcommenttemplate.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/htmlcommentemplate.test.js"
+    "test": "./node_modules/.bin/mocha test/htmlcommenttemplate.test.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/daikiueda/htmlcommentemplate.git"
+    "url": "https://github.com/daikiueda/htmlcommenttemplate.git"
   },
   "keywords": [
     "HTML",
@@ -18,9 +18,9 @@
   "author": "daikiueda",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/daikiueda/htmlcommentemplate/issues"
+    "url": "https://github.com/daikiueda/htmlcommenttemplate/issues"
   },
-  "homepage": "https://github.com/daikiueda/htmlcommentemplate",
+  "homepage": "https://github.com/daikiueda/htmlcommenttemplate",
   "devDependencies": {
     "chai": "^2.1.1",
     "mocha": "^2.1.0",

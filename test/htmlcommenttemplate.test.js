@@ -3,7 +3,7 @@
 var expect = require( "chai" ).expect,
     fs = require( "fs" ),
     shell = require( "shelljs" ),
-    htmlcommentemplate = require( "../lib/htmlcommentemplate.js" );
+    htmlcommenttemplate = require( "../lib/htmlcommenttemplate.js" );
 
 describe( "htmlcommentemplate( pathToTemplatesDir )", function(){
 
@@ -12,7 +12,7 @@ describe( "htmlcommentemplate( pathToTemplatesDir )", function(){
 
     it( "progress..", function( done ){
 
-        htmlcommentemplate( ".tmp/sample/htdocs/index.html", function(){
+        htmlcommenttemplate( ".tmp/sample/htdocs/index.html", function(){
             done();
             expect.fail();
         } );

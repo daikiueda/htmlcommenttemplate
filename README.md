@@ -1,22 +1,22 @@
-# htmlcommentemplate
+# htmlcommenttemplate
 Template Engine with HTML Comment tags. ( like Adobe Dreamweaver )
 
 <!--
 ## Install
 
 ```Bash
-$ npm install htmlcommentemplate
+$ npm install htmlcommenttemplate
 ```
 -->
 
 ## Usage
 
 ```JavaScript
-var htmlcommentemplate = require( "htmlcommentemplate" );
-htmlcommentemplate( "path_to_xlsx_file", function( error, jsonArray ){
+var htmlcommenttemplate = require( "htmlcommenttemplate" );
+htmlcommenttemplate( "path_to_xlsx_file", function( error, jsonArray ){
     ...
 } );
 ```
 
-### htmlcommentemplate( pathToXlsx, [options], [callback] )
+### htmlcommenttemplate( pathToXlsx, [options], [callback] )
 
