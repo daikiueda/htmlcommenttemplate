@@ -4,7 +4,7 @@
   "description": "Template Engine with HTML Comment tags.",
   "main": "./lib/htmlcommenttemplate.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/htmlcommenttemplate.test.js"
+    "test": "./node_modules/.bin/mocha ./test/ --recursive"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
     "chai": "^2.1.1",
     "mocha": "^2.1.0",
     "shelljs": "^0.3.0"
+  },
+  "dependencies": {
+    "q": "^1.2.0"
   }
 }

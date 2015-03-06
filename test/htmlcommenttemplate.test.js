@@ -1,7 +1,6 @@
 "use strict";
 
 var expect = require( "chai" ).expect,
-    fs = require( "fs" ),
     shell = require( "shelljs" ),
     htmlcommenttemplate = require( "../lib/htmlcommenttemplate.js" );
 
@@ -11,22 +10,19 @@ describe( "htmlcommentemplate( pathToTemplatesDir )", function(){
 //    after( deleteSampleFiles );
 
     it( "progress..", function( done ){
-
-        htmlcommenttemplate( ".tmp/sample/htdocs/index.html", function(){
-            done();
-            expect.fail();
-        } );
-
-
+        htmlcommenttemplate( "./.tmp/sample_files/Templates" )( "./.tmp/sample_files/htdocs/index.html" )
+            .done( function(){
+                done();
+            } );
     } );
 } );
 
 function prepareSampleFiles(){
     deleteSampleFiles();
     shell.mkdir( ".tmp" );
-    shell.cp( "-r", "./test/sample", ".tmp" );
+    shell.cp( "-r", "./sample_files", ".tmp" );
 }
 
 function deleteSampleFiles(){
-    shell.rm( "-rf", ".tmp/sample" )
+    shell.rm( "-rf", ".tmp/sample_files" )
 }
