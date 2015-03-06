@@ -5,6 +5,10 @@ var expect = require( "chai" ).expect,
 
 describe( "private / TargetHTML", function(){
 
+    describe( "Constructor()", function(){
+        it( "" );
+    } );
+
     describe( "init( path )", function(){
 
         it( "正常", function( done ){
@@ -16,17 +20,25 @@ describe( "private / TargetHTML", function(){
         } );
     } );
 
+    describe( "update()", function(){
+        it( "" );
+    } );
+
     describe( "detectTemplate()", function(){
 
         var targetHTML;
 
         before( function( done ){
             targetHTML = new TargetHTML( "./sample_files/htdocs/index.html" );
-            targetHTML.init().done( function(){ done(); });
+            targetHTML.init().done( function(){ done(); } );
         } );
 
         it( "テンプレートファイルのパス・ファイル名を返却する。", function(){
             expect( targetHTML.detectTemplate() ).to.equal( "base.tmpl" )
         } );
     } );
-} )
+
+    describe( "pickOutValues()", function(){
+        it( "" );
+    } );
+} );
