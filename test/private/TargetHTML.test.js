@@ -3,11 +3,11 @@
 var expect = require( "chai" ).expect,
     fs = require( "fs" ),
     utils = require( "../utils.js" ),
-    TargetHTML = require( "../../lib/private/TargetHTML.js" ),
-
-    testHTMLFilePath = "./.tmp/sample_files/htdocs/index.html";
+    TargetHTML = require( "../../lib/private/TargetHTML.js" );
 
 describe( "private / TargetHTML ＜更新対象のHTMLファイルを操作するクラス＞", function(){
+
+    var testHTMLFilePath = "./.tmp/sample_files/htdocs/index.html";
 
     beforeEach( utils.prepareSampleFiles );
     after( utils.deleteSampleFiles );
