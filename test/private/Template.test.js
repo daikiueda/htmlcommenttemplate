@@ -30,7 +30,47 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
 
     describe( "convertToTemplateFormat( HTMLCode )", function(){
 
-        it( "与えられたHTMLコードを、テンプレートエンジンで処理できる文字列に変換して、返却する。" )
+        describe( "与えられたHTMLコードを、テンプレートエンジンで処理できる文字列に変換して、返却する。", function(){
+
+            describe( "プレースホルダ", function(){
+
+                it( "<!-- TemplateBeginEditable --> 〜 <!-- TemplateEndEditable -->" );
+            } );
+
+            describe( "リソースファイルへのパス記述", function(){
+
+                it( "a[href]" );
+
+                it( "img[src]" );
+
+                it( "link[href]" );
+
+                it( "script[src]" );
+
+                describe( "パス記述の調整が適用されるべきでないケース", function(){
+
+                    it( "同一ページ内のアンカーリンク記述" );
+
+                    it( "サイトルート相対パス記述" );
+
+                    describe( "絶対パス記述", function(){
+
+                        it( "http://はじまり" );
+
+                        it( "https://はじまり" );
+
+                        it( "//はじまり" );
+                    } );
+
+                    describe( "前出のHTML要素のなかで、パス記述がない場合", function(){
+
+                        it( "a" );
+
+                        it( "script" );
+                    } );
+                } );
+            } );
+        } );
     } );
 
     describe( "generateCode( values )", function(){
