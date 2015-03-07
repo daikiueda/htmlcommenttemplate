@@ -76,4 +76,19 @@ describe( "private / TargetHTML ＜更新対象のHTMLファイルを操作す�
             } );
         } );
     } );
+
+    describe( "activateTemplateTags( HTMLCode )", function(){
+
+        var activateTemplateTags = TargetHTML.prototype.activateTemplateTags;
+
+        it( "InstanceBeginEditable -> <InstanceEditable>", function(){
+            expect( activateTemplateTags( "<!-- InstanceBeginEditable name=\"main\" --><!-- InstanceBeginEditable name=\"sub\" -->" ) )
+                .to.equal( "<InstanceEditable name=\"main\"><InstanceEditable name=\"sub\">" );
+        } );
+
+        it( "InstanceEndEditable -> </InstanceEditable>", function(){
+            expect( activateTemplateTags( "<!-- InstanceEndEditable --><!-- InstanceEndEditable -->" ) )
+                .to.equal( "</InstanceEditable></InstanceEditable>" );
+        } );
+    } );
 } );
