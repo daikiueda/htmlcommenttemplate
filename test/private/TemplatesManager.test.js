@@ -30,10 +30,12 @@ describe( "private / TemplatesManager ＜テンプレート更新処理の流れ
 
         describe( "任意の複数のHTMLファイルについて、更新処理を実行する。", function(){
 
-            beforeEach( function(){ spy = sinon.spy( TargetHTML.prototype, "update" ); } );
+            beforeEach( function(){
+                spy = sinon.spy( TargetHTML.prototype, "update" );
+            } );
             afterEach( function(){ spy.restore(); } );
 
-            it( "**/*.html", function( done ){
+            it( "htdocs/**/*.html", function( done ){
                 manager.updateEachHTMLFiles( "./.tmp/**/*.html" )
                     .done( function(){
                         expect( spy.callCount ).to.equal( 4 );
@@ -55,11 +57,35 @@ describe( "private / TemplatesManager ＜テンプレート更新処理の流れ
             } );
 
             it( '[ "htdocs/index.html", "htdocs/sub_dir/index.html" ]', function( done ){
-                manager.updateEachHTMLFiles( [ "./.tmp/sample_files/htdocs/index.html", "./.tmp/sample_files/htdocs/sub_dir/index.html" ] )
+                manager.updateEachHTMLFiles( [ ".tmp/sample_files/htdocs/index.html", ".tmp/sample_files/htdocs/sub_dir/index.html" ] )
                     .done( function(){
                         expect( spy.callCount ).to.equal( 2 );
                         expect( spy.thisValues[0].path ).to.include( "sample_files/htdocs/index.html" );
                         expect( spy.thisValues[1].path ).to.include( "sample_files/htdocs/sub_dir/index.html" );
+                        done();
+                    } );
+            } );
+
+            it( '[ "htdocs/**/*.html", "!htdocs/sub_dir/index.html" ]', function( done ){
+                manager.updateEachHTMLFiles( [ "./.tmp/sample_files/htdocs/**/*.html", "!./.tmp/sample_files/htdocs/sub_dir/index.html" ] )
+                    .done( function(){
+                        expect( spy.callCount ).to.equal( 2 );
+                        expect( spy.thisValues[0].path ).to.include( "sample_files/htdocs/index.html" );
+                        expect( spy.thisValues[1].path ).to.include( "sample_files/htdocs/sub_dir/sub_sub_dir/index.html" );
+                        done();
+                    } );
+            } );
+
+            it( '[ "**/*.{html,tmpl}", "!htdocs/sub_dir/index.html", "!Templates/analytics.tmpl" ]', function( done ){
+                manager.updateEachHTMLFiles( [
+                    "./.tmp/sample_files/htdocs/**/*.html",
+                    "!./.tmp/sample_files/htdocs/sub_dir/index.html",
+                    "!./.tmp/sample_files/Templates/analytics.tmpl"
+                ] )
+                    .done( function(){
+                        expect( spy.callCount ).to.equal( 2 );
+                        expect( spy.thisValues[0].path ).to.include( "sample_files/htdocs/index.html" );
+                        expect( spy.thisValues[1].path ).to.include( "sample_files/htdocs/sub_dir/sub_sub_dir/index.html" );
                         done();
                     } );
             } );
