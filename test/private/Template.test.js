@@ -117,22 +117,24 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
         it( "values, targetHTMLFilePathを反映したHTMLコードを生成する。", function( done ){
             ( new Template( testTemplateFilePath ) ).init()
                 .then( function( template ){
-                    return template.generateCode( {main: "aaa"}, "./.tmp/sample_files/htdocs/sub_dir/index.html" );
+                    return template.generateCode( { main: "_M_A_I_N_" }, "./.tmp/sample_files/htdocs/sub_dir/index.html" );
                 } )
                 .then( function( generatedCode ){
-                    console.log( generatedCode );
+                    expect( generatedCode ).to.contain( '<!-- TemplateBeginEditable name="main" -->_M_A_I_N_<!-- TemplateEndEditable -->' );
+                    expect( generatedCode ).to.contain( '<a href="../index.html">HOME</a>' );
                     done();
                 } );
         } );
 
         describe( "エラーケース", function(){
-            it( "error", function( done ){
+
+            it( "テンプレートに適用するvaluesに不足がある場合", function( done ){
                 ( new Template( testTemplateFilePath ) ).init()
                     .then( function( template ){
-                        return template.generateCode( {} );
+                        return template.generateCode( {}, "" );
                     } )
-                    .catch( function( reason ){
-                        //console.log( reason );
+                    .catch( function( error ){
+                        expect( error ).to.be.an.instanceof( Error );
                         done();
                     } );
             } );
@@ -141,6 +143,9 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
 
     describe( "convertResourcePathAbsolute( resourcePath )", function(){
 
-        it( "与えられたパスをシステム内での絶対パスに変換して返却する。" );
+        it( "与えられたパスをシステム内での絶対パスに変換して返却する。", function(){
+            var testPath = ( new Template( "./hoge/hoge/hoge.tmpl" ) ).convertResourcePathAbsolute( "../foo.foo" );
+            expect( testPath ).to.equal( require( "path" ).join( process.cwd(), "hoge", "foo.foo" ) );
+        } );
     } );
 } );
