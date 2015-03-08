@@ -1,6 +1,6 @@
 {
   "name": "htmlcommenttemplate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Template Engine with HTML Comment Tags.",
   "main": "./lib/htmlcommenttemplate.js",
   "scripts": {
