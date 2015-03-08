@@ -14,19 +14,37 @@ describe( "private / utils", function(){
         } );
     } );
 
+    describe( "activateTemplateTags", function(){
+
+        var activateTemplateTags = utils.activateTemplateTags;
+
+        describe( "Template用：コメントタグで表現されたテンプレート処理用の記述を、DOMとしてパース可能なタグに置き換えて返却する。", function(){
+
+            it( "TemplateBeginEditable -> <TemplateEditable>", function(){
+                expect( activateTemplateTags( "<!-- TemplateBeginEditable name=\"main\" --><!-- TemplateBeginEditable name=\"sub\" -->" ) )
+                    .to.equal( "<TemplateEditable name=\"main\"><TemplateEditable name=\"sub\">" );
+            } );
+
+            it( "TemplateEndEditable -> </TemplateEditable>", function(){
+                expect( activateTemplateTags( "<!-- TemplateEndEditable --><!-- TemplateEndEditable -->" ) )
+                    .to.equal( "</TemplateEditable></TemplateEditable>" );
+            } );
+        } );
+    } );
+
     describe( "activateInstanceTags", function(){
 
-        var activateTemplateTags = utils.activateInstanceTags;
+        var activateInstanceTags = utils.activateInstanceTags;
 
-        describe( "コメントタグで表現されたテンプレート処理用の記述を、DOMとしてパース可能なタグに置き換えて返却する。", function(){
+        describe( "Instance用：コメントタグで表現されたテンプレート処理用の記述を、DOMとしてパース可能なタグに置き換えて返却する。", function(){
 
             it( "InstanceBeginEditable -> <InstanceEditable>", function(){
-                expect( activateTemplateTags( "<!-- InstanceBeginEditable name=\"main\" --><!-- InstanceBeginEditable name=\"sub\" -->" ) )
+                expect( activateInstanceTags( "<!-- InstanceBeginEditable name=\"main\" --><!-- InstanceBeginEditable name=\"sub\" -->" ) )
                     .to.equal( "<InstanceEditable name=\"main\"><InstanceEditable name=\"sub\">" );
             } );
 
             it( "InstanceEndEditable -> </InstanceEditable>", function(){
-                expect( activateTemplateTags( "<!-- InstanceEndEditable --><!-- InstanceEndEditable -->" ) )
+                expect( activateInstanceTags( "<!-- InstanceEndEditable --><!-- InstanceEndEditable -->" ) )
                     .to.equal( "</InstanceEditable></InstanceEditable>" );
             } );
         } );
