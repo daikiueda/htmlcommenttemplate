@@ -60,6 +60,20 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                             '<!-- InstanceBeginEditable name="main" --><%= main %><!-- InstanceEndEditable -->',
                             '<!-- InstanceBeginEditable name="sub" --><%= sub %><!-- InstanceEndEditable -->'
                         ].join( "" ) );
+
+                    expect( template.convertToTemplateFormat(
+                        [
+                            '<!-- InstanceBeginEditable name="doc_info" -->',
+                            '<!-- TemplateBeginEditable name="doc_info" -->',
+                            '<title>Document</title>',
+                            '<!-- TemplateEndEditable -->',
+                            '<!-- InstanceEndEditable -->'
+                        ].join( "" )
+                    ) ).to.equal( [
+                            '<!-- InstanceBeginEditable name="doc_info" -->',
+                            '<%= doc_info %>',
+                            '<!-- InstanceEndEditable -->'
+                        ].join( "" ) );
                 } );
             } );
 
@@ -125,7 +139,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                         it( "script", function(){
                             expect( template.convertToTemplateFormat( '<script>\n/* test */\n</script>' ) )
                                 .to.equal( '<script>\n/* test */\n</script>' );
-                        }  );
+                        } );
                     } );
                 } );
             } );
@@ -137,7 +151,10 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
         it( "values, targetHTMLFilePathを反映したHTMLコードを生成する。", function( done ){
             ( new Template( testTemplateId, testTemplateFilePath ) ).init()
                 .then( function( template ){
-                    return template.generateCode( { main: "_M_A_I_N_" }, "./.tmp/sample_files/htdocs/sub_dir/index.html" );
+                    return template.generateCode(
+                        { main: "_M_A_I_N_", doc_info: "<title>test result</title>" },
+                        "./.tmp/sample_files/htdocs/sub_dir/index.html"
+                    );
                 } )
                 .then( function( generatedCode ){
                     expect( generatedCode ).to.contain( '<!-- InstanceBeginEditable name="main" -->_M_A_I_N_<!-- InstanceEndEditable -->' );
