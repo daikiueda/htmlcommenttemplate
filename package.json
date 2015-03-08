@@ -24,10 +24,12 @@
   "devDependencies": {
     "chai": "^2.1.1",
     "mocha": "^2.2.0",
-    "shelljs": "^0.3.0"
+    "shelljs": "^0.3.0",
+    "sinon": "^1.13.0"
   },
   "dependencies": {
     "cheerio": "^0.18.0",
+    "glob": "^5.0.1",
     "lodash": "^3.4.0",
     "q": "^1.2.0"
   }

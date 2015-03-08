@@ -2,9 +2,11 @@
 
 var expect = require( "chai" ).expect,
     fs = require( "fs" ),
+    sinon = require( "sinon" ),
     utils = require( "../utils.js" ),
     TemplatesManager = require( "../../lib/private/TemplatesManager.js" ),
-    Template = require( "../../lib/private/Template.js" );
+    Template = require( "../../lib/private/Template.js" ),
+    TargetHTML = require( "../../lib/private/TargetHTML.js" );
 
 describe( "private / TemplatesManager ＜テンプレート更新処理の流れを管理するクラス＞", function(){
 
@@ -21,7 +23,53 @@ describe( "private / TemplatesManager ＜テンプレート更新処理の流れ
         } );
     } );
 
+    describe( "updateEachHTMLFiles( files )", function(){
+
+        var manager = new TemplatesManager( testTemplateDirPath ),
+            spy;
+
+        describe( "任意の複数のHTMLファイルについて、更新処理を実行する。", function(){
+
+            beforeEach( function(){ spy = sinon.spy( TargetHTML.prototype, "update" ); } );
+            afterEach( function(){ spy.restore(); } );
+
+            it( "**/*.html", function( done ){
+                manager.updateEachHTMLFiles( "./.tmp/**/*.html" )
+                    .done( function(){
+                        expect( spy.callCount ).to.equal( 4 );
+                        expect( spy.thisValues[0].path ).to.include( "sample_files/Templates/base.tmpl" );
+                        expect( spy.thisValues[1].path ).to.include( "sample_files/htdocs/index.html" );
+                        expect( spy.thisValues[2].path ).to.include( "sample_files/htdocs/sub_dir/index.html" );
+                        expect( spy.thisValues[3].path ).to.include( "sample_files/htdocs/sub_dir/sub_sub_dir/index.html" );
+                        done();
+                    } );
+            } );
+
+            it( '"htdocs/index.html"', function( done ){
+                manager.updateEachHTMLFiles( "./.tmp/sample_files/htdocs/index.html" )
+                    .done( function(){
+                        expect( spy.callCount ).to.equal( 1 );
+                        expect( spy.thisValues[0].path ).to.include( "sample_files/htdocs/index.html" );
+                        done();
+                    } );
+            } );
+
+            it( '[ "htdocs/index.html", "htdocs/sub_dir/index.html" ]', function( done ){
+                manager.updateEachHTMLFiles( [ "./.tmp/sample_files/htdocs/index.html", "./.tmp/sample_files/htdocs/sub_dir/index.html" ] )
+                    .done( function(){
+                        expect( spy.callCount ).to.equal( 2 );
+                        expect( spy.thisValues[0].path ).to.include( "sample_files/htdocs/index.html" );
+                        expect( spy.thisValues[1].path ).to.include( "sample_files/htdocs/sub_dir/index.html" );
+                        done();
+                    } );
+            } );
+        } );
+    } );
+
     describe( "updateHTMLFile()", function(){
+
+        before( utils.prepareSampleFiles );
+
         it( "任意のHTMLファイル1点について、更新処理を実行する。", function( done ){
             ( new TemplatesManager( testTemplateDirPath ) ).updateHTMLFile( testHTMLFilePath )
                 .done( function(){
