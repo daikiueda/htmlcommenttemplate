@@ -6,14 +6,15 @@ var expect = require( "chai" ).expect,
 
 describe( "private / Templates ＜テンプレートの操作を管理するクラス＞", function(){
 
-    var testTemplateFilePath = "./.tmp/sample_files/Templates/base.tmpl";
+    var testTemplateId = "/Templates/base.tmpl",
+        testTemplateFilePath = "./.tmp/sample_files/Templates/base.tmpl";
 
     before( utils.prepareSampleFiles );
-    //after( utils.deleteSampleFiles );
+    after( utils.deleteSampleFiles );
 
     describe( "Constructor()", function(){
         it( "管理対象のテンプレートファイルの格納場所を、引数pathで受け取る。", function(){
-            var template = new Template( testTemplateFilePath );
+            var template = new Template( testTemplateId, testTemplateFilePath );
             expect( template.path ).to.equal( testTemplateFilePath );
         } );
     } );
@@ -21,7 +22,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
     describe( "init()", function(){
 
         it( "管理対象のテンプレートファイルを読み込み、テンプレート処理用に変換し、コード生成メソッドを初期化する。", function( done ){
-            ( new Template( testTemplateFilePath ) ).init().done( function( template ){
+            ( new Template( testTemplateId, testTemplateFilePath ) ).init().done( function( template ){
                 expect( template.processor ).to.be.a( "function" );
                 done();
             } )
@@ -30,16 +31,25 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
 
     describe( "convertToTemplateFormat( HTMLCode )", function(){
 
-        var template = new Template( testTemplateFilePath );
+        var template = new Template( testTemplateId, testTemplateFilePath );
 
         describe( "与えられたHTMLコードを、テンプレートエンジンで処理できる文字列に変換して、返却する。", function(){
+
+            describe( "テンプレートID", function(){
+
+                it( '<html> 〜 </html> -> <html><!-- InstanceBegin template="***" --> 〜 <!-- InstanceEnd --></html>"', function(){
+                    expect( template.convertToTemplateFormat(
+                        '<html></html>'
+                    ) ).to.equal( '<html><!-- InstanceBegin template="/<%- __templateId__ %>" --><!-- InstanceEnd --></html>' );
+                } );
+            } );
 
             describe( "プレースホルダ", function(){
 
                 it( "<!-- TemplateBeginEditable --> 〜 <!-- TemplateEndEditable -->", function(){
                     expect( template.convertToTemplateFormat(
                         '<!-- TemplateBeginEditable name="main" --><!-- TemplateEndEditable -->'
-                    ) ).to.equal( '<!-- TemplateBeginEditable name="main" --><%- main %><!-- TemplateEndEditable -->' );
+                    ) ).to.equal( '<!-- TemplateBeginEditable name="main" --><%= main %><!-- TemplateEndEditable -->' );
                 } );
             } );
 
@@ -47,22 +57,22 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
 
                 it( "a[href]", function(){
                     expect( template.convertToTemplateFormat( '<a href="hogehoge/index.html">hogehoge</a>' ) )
-                        .to.match( /<a href="<%- __normalizePath\( ".+hogehoge\/index.html" \) %>">hogehoge<\/a>/ );
+                        .to.match( /<a href="<%- __normalizePath__\( ".+hogehoge\/index.html" \) %>">hogehoge<\/a>/ );
                 } );
 
                 it( "img[src]", function(){
                     expect( template.convertToTemplateFormat( '<img src="hogehoge/hoge.gif" alt="hoge">' ) )
-                        .to.match( /<img src="<%- __normalizePath\( ".+hogehoge\/hoge.gif" \) %>" alt="hoge">/ );
+                        .to.match( /<img src="<%- __normalizePath__\( ".+hogehoge\/hoge.gif" \) %>" alt="hoge">/ );
                 } );
 
                 it( "link[href]", function(){
                     expect( template.convertToTemplateFormat( '<link rel="stylesheet" href="hogehoge/hoge.css">' ) )
-                        .to.match( /<link rel="stylesheet" href="<%- __normalizePath\( ".+hogehoge\/hoge.css" \) %>">/ );
+                        .to.match( /<link rel="stylesheet" href="<%- __normalizePath__\( ".+hogehoge\/hoge.css" \) %>">/ );
                 } );
 
                 it( "script[src]", function(){
                     expect( template.convertToTemplateFormat( '<script src="hogehoge/hoge.js"></script>' ) )
-                        .to.match( /<script src="<%- __normalizePath\( ".+hogehoge\/hoge.js" \) %>"><\/script>/ );
+                        .to.match( /<script src="<%- __normalizePath__\( ".+hogehoge\/hoge.js" \) %>"><\/script>/ );
                 } );
 
                 describe( "パス記述の調整が適用されるべきでないケース", function(){
@@ -115,7 +125,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
     describe( "generateCode( values )", function(){
 
         it( "values, targetHTMLFilePathを反映したHTMLコードを生成する。", function( done ){
-            ( new Template( testTemplateFilePath ) ).init()
+            ( new Template( testTemplateId, testTemplateFilePath ) ).init()
                 .then( function( template ){
                     return template.generateCode( { main: "_M_A_I_N_" }, "./.tmp/sample_files/htdocs/sub_dir/index.html" );
                 } )
@@ -129,7 +139,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
         describe( "エラーケース", function(){
 
             it( "テンプレートに適用するvaluesに不足がある場合", function( done ){
-                ( new Template( testTemplateFilePath ) ).init()
+                ( new Template( testTemplateId, testTemplateFilePath ) ).init()
                     .then( function( template ){
                         return template.generateCode( {}, "" );
                     } )
@@ -144,7 +154,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
     describe( "convertResourcePathAbsolute( resourcePath )", function(){
 
         it( "与えられたパスをシステム内での絶対パスに変換して返却する。", function(){
-            var testPath = ( new Template( "./hoge/hoge/hoge.tmpl" ) ).convertResourcePathAbsolute( "../foo.foo" );
+            var testPath = ( new Template( "/hoge", "./hoge/hoge/hoge.tmpl" ) ).convertResourcePathAbsolute( "../foo.foo" );
             expect( testPath ).to.equal( require( "path" ).join( process.cwd(), "hoge", "foo.foo" ) );
         } );
     } );
