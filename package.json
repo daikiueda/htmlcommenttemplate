@@ -1,7 +1,7 @@
 {
   "name": "htmlcommenttemplate",
-  "version": "0.0.0",
-  "description": "Template Engine with HTML Comment tags.",
+  "version": "0.0.1",
+  "description": "Template Engine with HTML Comment Tags.",
   "main": "./lib/htmlcommenttemplate.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha ./test/ --recursive"
