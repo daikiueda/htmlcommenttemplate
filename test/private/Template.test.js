@@ -30,43 +30,82 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
 
     describe( "convertToTemplateFormat( HTMLCode )", function(){
 
+        var template = new Template( testTemplateFilePath );
+
         describe( "与えられたHTMLコードを、テンプレートエンジンで処理できる文字列に変換して、返却する。", function(){
 
             describe( "プレースホルダ", function(){
 
-                it( "<!-- TemplateBeginEditable --> 〜 <!-- TemplateEndEditable -->" );
+                it( "<!-- TemplateBeginEditable --> 〜 <!-- TemplateEndEditable -->", function(){
+                    expect( template.convertToTemplateFormat(
+                        '<!-- TemplateBeginEditable name="main" --><!-- TemplateEndEditable -->'
+                    ) ).to.equal( '<!-- TemplateBeginEditable name="main" --><%- main %><!-- TemplateEndEditable -->' );
+                } );
             } );
 
             describe( "リソースファイルへのパス記述", function(){
 
-                it( "a[href]" );
+                it( "a[href]", function(){
+                    expect( template.convertToTemplateFormat( '<a href="hogehoge/index.html">hogehoge</a>' ) )
+                        .to.match( /<a href="<%- __normalizePath\( ".+hogehoge\/index.html" \) %>">hogehoge<\/a>/ );
+                } );
 
-                it( "img[src]" );
+                it( "img[src]", function(){
+                    expect( template.convertToTemplateFormat( '<img src="hogehoge/hoge.gif" alt="hoge">' ) )
+                        .to.match( /<img src="<%- __normalizePath\( ".+hogehoge\/hoge.gif" \) %>" alt="hoge">/ );
+                } );
 
-                it( "link[href]" );
+                it( "link[href]", function(){
+                    expect( template.convertToTemplateFormat( '<link rel="stylesheet" href="hogehoge/hoge.css">' ) )
+                        .to.match( /<link rel="stylesheet" href="<%- __normalizePath\( ".+hogehoge\/hoge.css" \) %>">/ );
+                } );
 
-                it( "script[src]" );
+                it( "script[src]", function(){
+                    expect( template.convertToTemplateFormat( '<script src="hogehoge/hoge.js"></script>' ) )
+                        .to.match( /<script src="<%- __normalizePath\( ".+hogehoge\/hoge.js" \) %>"><\/script>/ );
+                } );
 
                 describe( "パス記述の調整が適用されるべきでないケース", function(){
 
-                    it( "同一ページ内のアンカーリンク記述" );
+                    it( "同一ページ内のアンカーリンク記述", function(){
+                        expect( template.convertToTemplateFormat( '<a href="#">text</a>' ) )
+                            .to.equal( '<a href="#">text</a>' );
+                    } );
 
-                    it( "サイトルート相対パス記述" );
+                    it( "サイトルート相対パス記述", function(){
+                        expect( template.convertToTemplateFormat( '<a href="/hogehoge/hoge">text</a>' ) )
+                            .to.equal( '<a href="/hogehoge/hoge">text</a>' );
+                    } );
 
                     describe( "絶対パス記述", function(){
 
-                        it( "http://はじまり" );
+                        it( "http://はじまり", function(){
+                            expect( template.convertToTemplateFormat( '<a href="http://hoge.hoge/">text</a>' ) )
+                                .to.equal( '<a href="http://hoge.hoge/">text</a>' );
+                        } );
 
-                        it( "https://はじまり" );
+                        it( "https://はじまり", function(){
+                            expect( template.convertToTemplateFormat( '<a href="https://hoge.hoge/">text</a>' ) )
+                                .to.equal( '<a href="https://hoge.hoge/">text</a>' );
+                        } );
 
-                        it( "//はじまり" );
+                        it( "//はじまり", function(){
+                            expect( template.convertToTemplateFormat( '<a href="//hoge.hoge/">text</a>' ) )
+                                .to.equal( '<a href="//hoge.hoge/">text</a>' );
+                        } );
                     } );
 
                     describe( "前出のHTML要素のなかで、パス記述がない場合", function(){
 
-                        it( "a" );
+                        it( "a", function(){
+                            expect( template.convertToTemplateFormat( '<a name="hoge">text</a>' ) )
+                                .to.equal( '<a name="hoge">text</a>' );
+                        } );
 
-                        it( "script" );
+                        it( "script", function(){
+                            expect( template.convertToTemplateFormat( '<script>\n/* test */\n</script>' ) )
+                                .to.equal( '<script>\n/* test */\n</script>' );
+                        }  );
                     } );
                 } );
             } );
@@ -78,10 +117,10 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
         it( "values, targetHTMLFilePathを反映したHTMLコードを生成する。", function( done ){
             ( new Template( testTemplateFilePath ) ).init()
                 .then( function( template ){
-                    return template.generateCode( { main: "aaa" }, "./.tmp/sample_files/htdocs/sub_dir/index.html" );
+                    return template.generateCode( {main: "aaa"}, "./.tmp/sample_files/htdocs/sub_dir/index.html" );
                 } )
                 .then( function( generatedCode ){
-                    //console.log( generatedCode );
+                    console.log( generatedCode );
                     done();
                 } );
         } );
