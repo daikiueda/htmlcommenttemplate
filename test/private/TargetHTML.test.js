@@ -24,7 +24,7 @@ describe( "private / TargetHTML ＜更新対象のHTMLファイルを操作す�
         it( "管理対象のHTMLファイルを読み込み、内部の変数に格納する。", function( done ){
             var targetHTML = new TargetHTML( testHTMLFilePath );
             targetHTML.init().done( function(){
-                expect( targetHTML.srcHTMLCode ).to.contain( "<!DOCTYPE html>" );
+                expect( targetHTML.srcHTMLCode ).to.contain( "<!doctype html>" );
                 done();
             } );
         } );
