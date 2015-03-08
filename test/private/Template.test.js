@@ -52,8 +52,14 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                     ) ).to.equal( '<!-- InstanceBeginEditable name="main" --><%= main %><!-- InstanceEndEditable -->' );
 
                     expect( template.convertToTemplateFormat(
-                        '<!-- TemplateBeginEditable name="main" -->\n\t hoge \n\t<!-- TemplateEndEditable -->'
-                    ) ).to.equal( '<!-- InstanceBeginEditable name="main" --><%= main %><!-- InstanceEndEditable -->' );
+                        [
+                            '<!-- TemplateBeginEditable name="main" -->\n\t hoge main \n\t<!-- TemplateEndEditable -->',
+                            '<!-- TemplateBeginEditable name="sub" -->\n\t hoge sub \n\t<!-- TemplateEndEditable -->'
+                        ].join( "" )
+                    ) ).to.equal( [
+                            '<!-- InstanceBeginEditable name="main" --><%= main %><!-- InstanceEndEditable -->',
+                            '<!-- InstanceBeginEditable name="sub" --><%= sub %><!-- InstanceEndEditable -->'
+                        ].join( "" ) );
                 } );
             } );
 
