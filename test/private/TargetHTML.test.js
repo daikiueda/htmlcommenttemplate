@@ -77,9 +77,9 @@ describe( "private / TargetHTML ＜更新対象のHTMLファイルを操作す�
         } );
     } );
 
-    describe( "activateTemplateTags( HTMLCode )", function(){
+    describe( "activateInstanceTags( HTMLCode )", function(){
 
-        var activateTemplateTags = TargetHTML.prototype.activateTemplateTags;
+        var activateTemplateTags = TargetHTML.prototype.activateInstanceTags;
 
         it( "InstanceBeginEditable -> <InstanceEditable>", function(){
             expect( activateTemplateTags( "<!-- InstanceBeginEditable name=\"main\" --><!-- InstanceBeginEditable name=\"sub\" -->" ) )

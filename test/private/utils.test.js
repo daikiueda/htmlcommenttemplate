@@ -13,4 +13,38 @@ describe( "private / utils", function(){
                 .to.equal( "Templates/base.tmpl" )
         } );
     } );
+
+    describe( "activateInstanceTags", function(){
+
+        var activateTemplateTags = utils.activateInstanceTags;
+
+        describe( "コメントタグで表現されたテンプレート処理用の記述を、DOMとしてパース可能なタグに置き換えて返却する。", function(){
+
+            it( "InstanceBeginEditable -> <InstanceEditable>", function(){
+                expect( activateTemplateTags( "<!-- InstanceBeginEditable name=\"main\" --><!-- InstanceBeginEditable name=\"sub\" -->" ) )
+                    .to.equal( "<InstanceEditable name=\"main\"><InstanceEditable name=\"sub\">" );
+            } );
+
+            it( "InstanceEndEditable -> </InstanceEditable>", function(){
+                expect( activateTemplateTags( "<!-- InstanceEndEditable --><!-- InstanceEndEditable -->" ) )
+                    .to.equal( "</InstanceEditable></InstanceEditable>" );
+            } );
+        } );
+    } );
+
+    describe( "excludeInstanceTags", function(){
+
+        var excludeInstanceTags = utils.excludeInstanceTags;
+
+        describe( "<!-- Instance〜 -->を除外したコードを返却する。", function(){
+
+            it( '<!-- InstanceBeginEditable name="***" -->', function(){
+                expect( excludeInstanceTags( '<!-- InstanceBeginEditable name="main" -->' ) ).to.equal( "" );
+            } );
+
+            it( '<!-- InstanceEndEditable -->', function(){
+                expect( excludeInstanceTags( '<!-- InstanceEndEditable -->' ) ).to.equal( "" );
+            } );
+        } );
+    } );
 } );
