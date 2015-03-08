@@ -50,6 +50,10 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                     expect( template.convertToTemplateFormat(
                         '<!-- TemplateBeginEditable name="main" --><!-- TemplateEndEditable -->'
                     ) ).to.equal( '<!-- InstanceBeginEditable name="main" --><%= main %><!-- InstanceEndEditable -->' );
+
+                    expect( template.convertToTemplateFormat(
+                        '<!-- TemplateBeginEditable name="main" -->\n\t hoge \n\t<!-- TemplateEndEditable -->'
+                    ) ).to.equal( '<!-- InstanceBeginEditable name="main" --><%= main %><!-- InstanceEndEditable -->' );
                 } );
             } );
 
