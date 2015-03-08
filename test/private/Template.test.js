@@ -49,7 +49,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                 it( "<!-- TemplateBeginEditable --> 〜 <!-- TemplateEndEditable -->", function(){
                     expect( template.convertToTemplateFormat(
                         '<!-- TemplateBeginEditable name="main" --><!-- TemplateEndEditable -->'
-                    ) ).to.equal( '<!-- TemplateBeginEditable name="main" --><%= main %><!-- TemplateEndEditable -->' );
+                    ) ).to.equal( '<!-- InstanceBeginEditable name="main" --><%= main %><!-- InstanceEndEditable -->' );
                 } );
             } );
 
@@ -130,7 +130,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                     return template.generateCode( { main: "_M_A_I_N_" }, "./.tmp/sample_files/htdocs/sub_dir/index.html" );
                 } )
                 .then( function( generatedCode ){
-                    expect( generatedCode ).to.contain( '<!-- TemplateBeginEditable name="main" -->_M_A_I_N_<!-- TemplateEndEditable -->' );
+                    expect( generatedCode ).to.contain( '<!-- InstanceBeginEditable name="main" -->_M_A_I_N_<!-- InstanceEndEditable -->' );
                     expect( generatedCode ).to.contain( '<a href="../index.html">HOME</a>' );
                     done();
                 } );
