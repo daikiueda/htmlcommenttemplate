@@ -1,1 +1,1 @@
-document.write( "dummy.js is loaded." )
+document.write( "dummy.js is loaded." );
