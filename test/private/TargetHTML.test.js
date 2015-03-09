@@ -54,7 +54,7 @@ describe( "private / TargetHTML ＜更新対象のHTMLファイルを操作す�
         } );
 
         it( "関連付けされたテンプレートのIDを返却する。", function(){
-            expect( targetHTML.detectTemplateId() ).to.equal( "Templates/base.tmpl" )
+            expect( targetHTML.detectTemplateId() ).to.equal( "Templates/base.tmpl" );
         } );
     } );
 

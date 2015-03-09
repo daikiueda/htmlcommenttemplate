@@ -1,0 +1,10 @@
+---
+  env:
+    browser: false
+    node: true
+    amd: false
+    mocha: true
+
+  rules:
+    quotes: [1, "double", "avoid-escape"]
+    no-shadow: 0

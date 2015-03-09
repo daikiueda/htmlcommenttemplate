@@ -12,9 +12,10 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
     before( utils.prepareSampleFiles );
     after( utils.deleteSampleFiles );
 
-    describe( "Constructor()", function(){
-        it( "管理対象のテンプレートファイルの格納場所を、引数pathで受け取る。", function(){
+    describe( "Constructor( id, pathToTemplateFile )", function(){
+        it( "管理対象のテンプレートのIDとファイルの格納場所を、引数で受け取る。", function(){
             var template = new Template( testTemplateId, testTemplateFilePath );
+            expect( template.id ).to.equal( testTemplateId );
             expect( template.path ).to.equal( testTemplateFilePath );
         } );
     } );
@@ -25,7 +26,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
             ( new Template( testTemplateId, testTemplateFilePath ) ).init().done( function( template ){
                 expect( template.processor ).to.be.a( "function" );
                 done();
-            } )
+            } );
         } );
     } );
 
@@ -174,7 +175,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                     } );
                 } );
             } );
-        } )
+        } );
     } );
 
     describe( "generateCode( values )", function(){

@@ -4,13 +4,13 @@
 var shell = require( "shelljs" );
 
 
+function deleteSampleFiles(){
+    shell.rm( "-rf", ".tmp/sample_files" );
+}
+
 function prepareSampleFiles(){
     deleteSampleFiles();
     shell.cp( "-r", "./sample_files", ".tmp" );
-}
-
-function deleteSampleFiles(){
-    shell.rm( "-rf", ".tmp/sample_files" );
 }
 
 
