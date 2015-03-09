@@ -24,6 +24,7 @@
   "homepage": "https://github.com/daikiueda/htmlcommenttemplate",
   "devDependencies": {
     "chai": "^2.1.1",
+    "codeclimate-test-reporter": "0.0.4",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.7",
     "mocha": "^2.2.1",

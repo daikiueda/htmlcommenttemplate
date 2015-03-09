@@ -7,9 +7,8 @@ script:
   make test-cov
 
 after_success:
-  - cat lcov.info | codeclimate
-  - make coveralls
-  - make clean
+  - cat ./coverage/lcov.info | ./node_modules/codeclimate-test-reporter/bin/codeclimate.js
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
 addons:
   code_climate:
