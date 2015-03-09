@@ -8,5 +8,8 @@ node_js:
   - "0.10"
 
 script:
- - "npm test"
+  'make test-cov'
+
+after_success:
+  'make coveralls; make clean'
 
