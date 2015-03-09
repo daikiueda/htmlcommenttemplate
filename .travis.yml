@@ -1,15 +1,17 @@
-os:
-  - linux
-  - osx
-
 language: node_js
 
 node_js:
   - "0.10"
 
 script:
-  'make test-cov'
+  make test-cov
 
 after_success:
-  'make coveralls; make clean'
+  - cat lcov.info | codeclimate
+  - make coveralls
+  - make clean
+
+addons:
+  code_climate:
+    repo_token: 881a65b7e0d735981080166d5d671a041077e0179e3953048c3f71c793dec5ac
 
