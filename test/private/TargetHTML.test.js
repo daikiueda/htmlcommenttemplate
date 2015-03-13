@@ -1,6 +1,7 @@
 "use strict";
 
-var expect = require( "chai" ).expect,
+var EOL = require('os').EOL,
+    expect = require( "chai" ).expect,
     fs = require( "fs" ),
     utils = require( "../utils.js" ),
     TargetHTML = require( "../../lib/private/TargetHTML.js" );
@@ -72,7 +73,7 @@ describe( "private / TargetHTML ＜更新対象のHTMLファイルを操作す�
             var values = targetHTML.pickOutValues();
             expect( values ).to.be.an( "object" );
             expect( values ).to.eql( {
-                main: "\n            <h1>/index.html</h1>\n            "
+                main: [ "", "            <h1>/index.html</h1>", "            " ].join( EOL )
             } );
         } );
     } );

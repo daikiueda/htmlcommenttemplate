@@ -41,10 +41,10 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                     .to.eql( { main: "MAIN_DEFAULT" } );
             } );
 
-            it( "リソースファイルへのパス記述は、ユーティリティ関数（__normalizePath）を経由する表現に変換される。", function(){
+            it( "リソースファイルへのパス記述は、ユーティリティ関数（__normalizePath__）を経由する表現に変換される。", function(){
                 expect( template.pickOutDefaultValues( '<!-- TemplateBeginEditable name="main" --><a href="hogehoge/index.html">hogehoge</a><!-- TemplateEndEditable -->' ) )
                     .to.have.property( "main" )
-                    .and.match( /<a href="<%- __normalizePath__\( ".+hogehoge\/index.html" \) %>">hogehoge<\/a>/ );
+                    .and.match( /<a href="<%- __normalizePath__\( ".+hogehoge(\/|\\\\)index.html" \) %>">hogehoge<\/a>/ );
             } );
         } );
     } );
@@ -114,22 +114,22 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
         describe( "リソースファイルへのパス記述を、テンプレート適用の処理で相対形式にできるよう、ユーティリティ関数（__normalizePath）を経由する表現に変換する。", function(){
             it( "a[href]", function(){
                 expect( template.convertResourcePathFormat( '<a href="hogehoge/index.html">hogehoge</a>' ) )
-                    .to.match( /<a href="<%- __normalizePath__\( ".+hogehoge\/index.html" \) %>">hogehoge<\/a>/ );
+                    .to.match( /<a href="<%- __normalizePath__\( ".+hogehoge(\/|\\\\)index.html" \) %>">hogehoge<\/a>/ );
             } );
 
             it( "img[src]", function(){
                 expect( template.convertResourcePathFormat( '<img src="hogehoge/hoge.gif" alt="hoge">' ) )
-                    .to.match( /<img src="<%- __normalizePath__\( ".+hogehoge\/hoge.gif" \) %>" alt="hoge">/ );
+                    .to.match( /<img src="<%- __normalizePath__\( ".+hogehoge(\/|\\\\)hoge.gif" \) %>" alt="hoge">/ );
             } );
 
             it( "link[href]", function(){
                 expect( template.convertResourcePathFormat( '<link rel="stylesheet" href="hogehoge/hoge.css">' ) )
-                    .to.match( /<link rel="stylesheet" href="<%- __normalizePath__\( ".+hogehoge\/hoge.css" \) %>">/ );
+                    .to.match( /<link rel="stylesheet" href="<%- __normalizePath__\( ".+hogehoge(\/|\\\\)hoge.css" \) %>">/ );
             } );
 
             it( "script[src]", function(){
                 expect( template.convertResourcePathFormat( '<script src="hogehoge/hoge.js"></script>' ) )
-                    .to.match( /<script src="<%- __normalizePath__\( ".+hogehoge\/hoge.js" \) %>"><\/script>/ );
+                    .to.match( /<script src="<%- __normalizePath__\( ".+hogehoge(\/|\\\\)hoge.js" \) %>"><\/script>/ );
             } );
 
             describe( "パス記述の調整が適用されるべきでないケース", function(){

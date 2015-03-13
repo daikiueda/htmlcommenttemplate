@@ -1,6 +1,7 @@
 "use strict";
 
-var expect = require( "chai" ).expect,
+var EOL = require('os').EOL,
+    expect = require( "chai" ).expect,
     fs = require( "fs" ),
     utils = require( "./utils.js" ),
     htmlcommenttemplate = require( "../lib/htmlcommenttemplate.js" );
@@ -29,7 +30,7 @@ describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", funct
             expect( updatedHTMLFileContent ).to.contain( [
                 "        <header>",
                 "            common header<br>"
-            ].join( "\n" ) );
+            ].join( EOL ) );
         } );
 
         it( "テンプレート部分のリソースファイルのパス記述は、相対パス形式になる。", function(){
@@ -47,7 +48,7 @@ describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", funct
                 "            <!-- InstanceBeginEditable name=\"main\" -->",
                 "            <h1>/sub_dir/sub_sub_dir/index.html</h1>",
                 "            <!-- InstanceEndEditable -->"
-            ].join( "\n" ) );
+            ].join( EOL ) );
         } );
 
         it( "未設置の編集可能領域には、テンプレートのデフォルトの内容が適用される。リソースファイルのパス記述は、相対パス形式になる。", function(){
@@ -55,7 +56,7 @@ describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", funct
                 "            <!-- InstanceBeginEditable name=\"aside\" -->",
                 "            <a href=\"../../index.html\">HOME</a>",
                 "            <!-- InstanceEndEditable -->"
-            ].join( "\n" ) );
+            ].join( EOL ) );
         } );
 
         it( "テンプレートで定義されていない編集可能領域は、削除される。", function(){
