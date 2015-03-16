@@ -1,6 +1,6 @@
 {
   "name": "htmlcommenttemplate",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "HTML files updater with Comment format Template Tags. ( like Adobe Dreamweaver )",
   "main": "./lib/htmlcommenttemplate.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "istanbul": "^0.3.8",
     "mocha": "^2.2.1",
     "shelljs": "^0.3.0",
-    "sinon": "^1.14.0"
+    "sinon": "^1.14.1"
   },
   "dependencies": {
     "cheerio": "^0.18.0",
