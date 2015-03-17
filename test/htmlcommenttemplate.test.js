@@ -10,13 +10,15 @@ describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", funct
 
     var testTemplateDirPath = "./.tmp/sample_files/Templates",
         updatedHTMLFileContent,
-        returns;
+        returns,
+        promise_results;
 
     before( function( done ){
         utils.prepareSampleFiles();
         returns = htmlcommenttemplate( testTemplateDirPath )( "./.tmp/sample_files/htdocs/**/*.html" );
         returns
-            .done( function(){
+            .done( function( results ){
+                promise_results = results;
                 fs.readFile( "./.tmp/sample_files/htdocs/sub_dir/sub_sub_dir/index.html", "utf-8", function( err, data ){
                     if( err ){
                         done();
@@ -75,6 +77,16 @@ describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", funct
             expect( returns ).to.have.property( "then" );
             expect( returns ).to.have.property( "done" );
             expect( returns ).to.have.property( "fail" );
+        } );
+        it( "promiseオブジェクトは、resolve時に更新ファイルの一覧を渡す。", function(){
+            expect( promise_results ).to.have.property( "success" );
+            expect( promise_results ).to.have.property( "error" );
+
+            expect( promise_results.success ).to.deep.equal( [
+                "./.tmp/sample_files/htdocs/index.html",
+                "./.tmp/sample_files/htdocs/sub_dir/index.html",
+                "./.tmp/sample_files/htdocs/sub_dir/sub_sub_dir/index.html"
+            ] );
         } );
     } );
 } );
