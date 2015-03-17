@@ -11,7 +11,7 @@ $ npm install htmlcommenttemplate
 
 ```JavaScript
 var htmlcommenttemplate = require( "htmlcommenttemplate" );
-htmlcommenttemplate( path_to_xlsx_file )( pathToHTMLFile(s) );
+htmlcommenttemplate( pathToTemplatesDir )( pathToHTMLFile(s) );
 ```
 
 ## Example
