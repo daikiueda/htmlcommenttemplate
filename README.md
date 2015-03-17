@@ -14,6 +14,8 @@ var htmlcommenttemplate = require( "htmlcommenttemplate" );
 htmlcommenttemplate( pathToTemplatesDir )( pathToHTMLFile(s) );
 ```
 
+__returns__ promise instance object( Q promise - http://documentup.com/kriskowal/q/ )
+
 ## Example
 
 ```

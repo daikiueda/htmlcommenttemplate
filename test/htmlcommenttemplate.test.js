@@ -1,6 +1,6 @@
 "use strict";
 
-var EOL = require('os').EOL,
+var EOL = require( "os" ).EOL,
     expect = require( "chai" ).expect,
     fs = require( "fs" ),
     utils = require( "./utils.js" ),
@@ -9,14 +9,19 @@ var EOL = require('os').EOL,
 describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", function(){
 
     var testTemplateDirPath = "./.tmp/sample_files/Templates",
-        updatedHTMLFileContent;
+        updatedHTMLFileContent,
+        returns;
 
     before( function( done ){
         utils.prepareSampleFiles();
-        htmlcommenttemplate( testTemplateDirPath )( "./.tmp/sample_files/htdocs/**/*.html" )
+        returns = htmlcommenttemplate( testTemplateDirPath )( "./.tmp/sample_files/htdocs/**/*.html" );
+        returns
             .done( function(){
                 fs.readFile( "./.tmp/sample_files/htdocs/sub_dir/sub_sub_dir/index.html", "utf-8", function( err, data ){
-                    if( err ){ done(); return; }
+                    if( err ){
+                        done();
+                        return;
+                    }
                     updatedHTMLFileContent = data;
                     done();
                 } );
@@ -64,6 +69,12 @@ describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", funct
                 .not.to.contain( "UNDEFINED EDITABLE AREA" );
         } );
     } );
+
+    describe( "返却値", function(){
+        it( "Promise（Q.promise）のインスタンスオブジェクトが返却される。", function(){
+            expect( returns ).to.have.property( "then" );
+            expect( returns ).to.have.property( "done" );
+            expect( returns ).to.have.property( "fail" );
+        } );
+    } );
 } );
-
-
