@@ -38,21 +38,24 @@ describe( "private / TemplatesManager ＜テンプレート更新処理の流れ
 
             describe( "globパターン", function(){
                 it( '"htdocs/**/*.html"', function( done ){
-                    manager.updateEachHTMLFiles( "./.tmp/**/*.html" )
-                        .done( function(){
+                    manager.updateEachHTMLFiles( "./.tmp/sample_files/**/*.html" )
+                        .then( function(){
                             expect( spy.callCount ).to.equal( 4 );
                             expect( spy.thisValues[0].path ).to.include( path.join( "sample_files", "Templates", "base.tmpl" ) );
                             expect( spy.thisValues[1].path ).to.include( "sample_files/htdocs/index.html" );
                             expect( spy.thisValues[2].path ).to.include( "sample_files/htdocs/sub_dir/index.html" );
                             expect( spy.thisValues[3].path ).to.include( "sample_files/htdocs/sub_dir/sub_sub_dir/index.html" );
                             done();
+                        } )
+                        .catch( function( e ){
+                            done( e );
                         } );
                 } );
             } );
 
             describe( "パターンの配列（＋除外パターンの指定）", function(){
                 it( '[ "htdocs/index.html", "htdocs/sub_dir/index.html" ]', function( done ){
-                    manager.updateEachHTMLFiles( [ ".tmp/sample_files/htdocs/index.html", ".tmp/sample_files/htdocs/sub_dir/index.html" ] )
+                    manager.updateEachHTMLFiles( [ "./.tmp/sample_files/htdocs/index.html", "./.tmp/sample_files/htdocs/sub_dir/index.html" ] )
                         .done( function(){
                             expect( spy.callCount ).to.equal( 2 );
                             expect( spy.thisValues[0].path ).to.include( "sample_files/htdocs/index.html" );

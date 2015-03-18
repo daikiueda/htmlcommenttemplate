@@ -36,7 +36,7 @@ describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", funct
         it( "関連付けされたテンプレートの内容が反映される。", function(){
             expect( updatedHTMLFileContent ).to.contain( [
                 "        <header>",
-                "            common header<br>"
+                "            common header ノン・アスキー文字<br>"
             ].join( EOL ) );
         } );
 
