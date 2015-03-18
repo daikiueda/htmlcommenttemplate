@@ -4,6 +4,7 @@ var expect = require( "chai" ).expect,
     utils = require( "../utils.js" ),
     Template = require( "../../lib/private/Template.js" );
 
+/*eslint camelcase:0 */
 describe( "private / Templates ＜テンプレートの操作を管理するクラス＞", function(){
 
     var testTemplateId = "/Templates/base.tmpl",
@@ -32,19 +33,83 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
 
     describe( "pickOutDefaultValues()", function(){
 
-        var template = new Template( testTemplateId, testTemplateFilePath );
+        var template;
+
+        before( function( done ){
+            template = new Template( testTemplateId, testTemplateFilePath );
+            template.init().done( function(){ done(); } );
+        } );
 
         describe( "管理対象のテンプレートファイルから、テンプレートへの適用対象となるデフォルト値を抽出し、オブジェクトとして返却する。", function(){
 
-            it( "TemplateBeginEditable", function(){
-                expect( template.pickOutDefaultValues( '<!-- TemplateBeginEditable name="main" -->MAIN_DEFAULT<!-- TemplateEndEditable -->' ) )
-                    .to.eql( { main: "MAIN_DEFAULT" } );
-            } );
+            describe( "Editable 編集可能領域", function(){
+                it( "TemplateBeginEditable", function(){
+                    expect( template.pickOutDefaultValues( '<!-- TemplateBeginEditable name="main" -->MAIN_DEFAULT<!-- TemplateEndEditable -->' ) )
+                        .to.eql( { main: "MAIN_DEFAULT" } );
+                } );
 
-            it( "リソースファイルへのパス記述は、ユーティリティ関数（__normalizePath__）を経由する表現に変換される。", function(){
-                expect( template.pickOutDefaultValues( '<!-- TemplateBeginEditable name="main" --><a href="hogehoge/index.html">hogehoge</a><!-- TemplateEndEditable -->' ) )
-                    .to.have.property( "main" )
-                    .and.match( /<a href="<%- __normalizePath__\( ".+hogehoge(\/|\\\\)index.html" \) %>">hogehoge<\/a>/ );
+                it( "InstanceBeginEditable（親テンプレートで定義）", function(){
+                    expect( template.pickOutDefaultValues( '<!-- InstanceBeginEditable name="sub" -->SUB_DEFAULT<!-- InstanceEndEditable -->' ) )
+                        .to.eql( { sub: "SUB_DEFAULT" } );
+                } );
+
+
+                it( "リソースファイルへのパス記述は、ユーティリティ関数（__normalizePath__）を経由する表現に変換される。", function(){
+                    expect( template.pickOutDefaultValues( '<!-- TemplateBeginEditable name="main" --><a href="hogehoge/index.html">hogehoge</a><!-- TemplateEndEditable -->' ) )
+                        .to.have.property( "main" )
+                        .and.match( /<a href="<%- __normalizePath__\( ".+hogehoge(\/|\\\\)index.html" \) %>">hogehoge<\/a>/ );
+                } );
+
+                describe( "BeginEditableの入れ子", function(){
+                    it( "基本的に、Instance/Templateを問わず全ての値が抽出される。", function(){
+                        expect( template.pickOutDefaultValues( [
+                            '<!-- InstanceBeginEditable name="main" -->',
+                            'PARENT_VALUE',
+                            '<!-- TemplateBeginEditable name="sub1" -->SUB_1_VALUE<!-- TemplateEndEditable -->',
+                            '<!-- InstanceEndEditable -->'
+                        ].join( "" ) ) )
+                            .to.eql( {
+                                main: "PARENT_VALUE<!-- TemplateBeginEditable name=\"sub1\" -->SUB_1_VALUE<!-- TemplateEndEditable -->",
+                                sub1: "SUB_1_VALUE"
+                            } );
+                    } );
+
+                    it( "同名の場合は、内側の値が採用される。", function(){
+                        expect( template.pickOutDefaultValues( [
+                            '<!-- InstanceBeginEditable name="main" -->',
+                            'PARENT_VALUE',
+                            '<!-- TemplateBeginEditable name="main" -->SELF_VALUE<!-- TemplateEndEditable -->',
+                            '<!-- InstanceEndEditable -->'
+                        ].join( "" ) ) )
+                            .to.eql( { main: "SELF_VALUE" } );
+                    } );
+                } );
+
+                describe( "各種の文字列", function(){
+                    it( "日本語の文字列も、そのまま抽出できる。", function(){
+                        var testStr = "ノン・アスキーの文字列";
+                        expect( template.pickOutDefaultValues( '<!-- InstanceBeginEditable name="test" -->' + testStr + '<!-- InstanceEndEditable -->' ) )
+                            .to.eql( { main: testStr } );
+                    } );
+
+                    it( "特殊文字も、そのまま抽出できる。", function(){
+                        var testStr = "<p>&copy;&amp;&trade;</p>";
+                        expect( template.pickOutDefaultValues( '<!-- InstanceBeginEditable name="test" -->' + testStr + '<!-- InstanceEndEditable -->' ) )
+                            .to.eql( { main: testStr } );
+                    } );
+
+                    it( "<!-- comment -->", function(){
+                        var testStr = "<!-- comment -->";
+                        expect( template.pickOutDefaultValues( '<!-- InstanceBeginEditable name="test" -->' + testStr + '<!-- InstanceEndEditable -->' ) )
+                            .to.eql( { main: testStr } );
+                    } );
+
+                    it( "&lt;!-- not comment --&gt;", function(){
+                        var testStr = "&lt;!-- not comment --&gt;";
+                        expect( template.pickOutDefaultValues( '<!-- InstanceBeginEditable name="test" -->' + testStr + '<!-- InstanceEndEditable -->' ) )
+                            .to.eql( { main: testStr } );
+                    } );
+                } );
             } );
         } );
     } );

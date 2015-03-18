@@ -79,20 +79,22 @@ describe( "private / TargetHTML ＜更新対象のHTMLファイルを操作す�
             expect( values.main.split( EOL ) ).to.have.length( 7 );
         } );
 
-        it( "日本語の文字列も、そのまま抽出できる。", function(){
-            expect( values.main ).to.contain( "<p>ノン・アスキーの文字列</p>" );
-        } );
+        describe( "各種の文字列", function(){
+            it( "日本語の文字列も、そのまま抽出できる。", function(){
+                expect( values.main ).to.contain( "<p>ノン・アスキーの文字列</p>" );
+            } );
 
-        it( "特殊文字も、そのまま抽出できる。", function(){
-            expect( values.main ).to.contain( "<p>&copy;&amp;&trade;</p>" );
-        } );
+            it( "特殊文字も、そのまま抽出できる。", function(){
+                expect( values.main ).to.contain( "<p>&copy;&amp;&trade;</p>" );
+            } );
 
-        it( "<!-- comment -->", function(){
-            expect( values.main ).to.contain( "<!-- comment -->" );
-        } );
+            it( "<!-- comment -->", function(){
+                expect( values.main ).to.contain( "<!-- comment -->" );
+            } );
 
-        it( "&lt;!-- not comment --&gt;", function(){
-            expect( values.main ).to.contain( "&lt;!-- not comment --&gt;" );
+            it( "&lt;!-- not comment --&gt;", function(){
+                expect( values.main ).to.contain( "&lt;!-- not comment --&gt;" );
+            } );
         } );
     } );
 
