@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta property="og:type" content="">
+		<meta property="og:site_name" content="">
+		<meta property="fb:admins" content="">
+		<meta name="twitter:card" content="">
+		<meta name="twitter:site" content="">
+		<!-- TemplateBeginEditable name="docinfo" -->
+		<title></title>
+		<meta property="og:title" content="">
+		<meta name="description" content="">
+		<meta property="og:description" content="">
+		<meta name="keywords" content="">
+		<meta property="og:image" content="">
+		<meta property="og:url" content="">
+		<link rel="canonical" href="">
+		<!-- TemplateEndEditable -->
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+		<style>#analytics_code { position: absolute; width: 1px; height: 1px; overflow: hidden; }</style>
+	</head>
+	<body>
+		<!-- TemplateBeginEditable name="body" --><!-- TemplateEndEditable -->
+		<div id="analytics_code">
+		</div>
+	</body>
+</html>
