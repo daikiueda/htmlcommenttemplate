@@ -89,25 +89,25 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                     it( "日本語の文字列も、そのまま抽出できる。", function(){
                         var testStr = "ノン・アスキーの文字列";
                         expect( template.pickOutDefaultValues( '<!-- InstanceBeginEditable name="test" -->' + testStr + '<!-- InstanceEndEditable -->' ) )
-                            .to.eql( { main: testStr } );
+                            .to.eql( { test: testStr } );
                     } );
 
                     it( "特殊文字も、そのまま抽出できる。", function(){
                         var testStr = "<p>&copy;&amp;&trade;</p>";
                         expect( template.pickOutDefaultValues( '<!-- InstanceBeginEditable name="test" -->' + testStr + '<!-- InstanceEndEditable -->' ) )
-                            .to.eql( { main: testStr } );
+                            .to.eql( { test: testStr } );
                     } );
 
                     it( "<!-- comment -->", function(){
                         var testStr = "<!-- comment -->";
                         expect( template.pickOutDefaultValues( '<!-- InstanceBeginEditable name="test" -->' + testStr + '<!-- InstanceEndEditable -->' ) )
-                            .to.eql( { main: testStr } );
+                            .to.eql( { test: testStr } );
                     } );
 
                     it( "&lt;!-- not comment --&gt;", function(){
                         var testStr = "&lt;!-- not comment --&gt;";
                         expect( template.pickOutDefaultValues( '<!-- InstanceBeginEditable name="test" -->' + testStr + '<!-- InstanceEndEditable -->' ) )
-                            .to.eql( { main: testStr } );
+                            .to.eql( { test: testStr } );
                     } );
                 } );
             } );
