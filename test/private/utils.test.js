@@ -55,12 +55,12 @@ describe( "private / utils", function(){
 
         describe( "<!-- Instance〜 -->を除外したコードを返却する。", function(){
 
-            it( '<!-- InstanceBeginEditable name="***" -->', function(){
-                expect( excludeInstanceTags( '<!-- InstanceBeginEditable name="main" -->' ) ).to.equal( "" );
-            } );
-
             it( '<!-- InstanceEndEditable -->', function(){
                 expect( excludeInstanceTags( '<!-- InstanceEndEditable -->' ) ).to.equal( "" );
+            } );
+
+            it( '<!-- InstanceBeginEditable name="***" -->', function(){
+                expect( excludeInstanceTags( '<!-- InstanceBeginEditable name="main" -->' ) ).to.equal( "" );
             } );
         } );
     } );

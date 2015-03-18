@@ -61,20 +61,38 @@ describe( "private / TargetHTML ＜更新対象のHTMLファイルを操作す�
 
     describe( "pickOutValues()", function(){
 
-        var targetHTML;
+        var targetHTML,
+            values;
 
         before( function( done ){
             utils.prepareSampleFiles();
             targetHTML = new TargetHTML( testHTMLFilePath );
-            targetHTML.init().done( function(){ done(); } );
+            targetHTML.init().done( function(){
+                values = targetHTML.pickOutValues();
+                done();
+            } );
         } );
 
         it( "管理対象のHTMLファイルから、テンプレートへの適用対象となる内容を抽出し、オブジェクトとして返却する。", function(){
-            var values = targetHTML.pickOutValues();
             expect( values ).to.be.an( "object" );
-            expect( values ).to.eql( {
-                main: [ "", "            <h1>/index.html</h1>", "            " ].join( EOL )
-            } );
+            expect( values.main ).to.contain( "<h1>/index.html</h1>" );
+            expect( values.main.split( EOL ) ).to.have.length( 7 );
+        } );
+
+        it( "日本語の文字列も、そのまま抽出できる。", function(){
+            expect( values.main ).to.contain( "<p>ノン・アスキーの文字列</p>" );
+        } );
+
+        it( "特殊文字も、そのまま抽出できる。", function(){
+            expect( values.main ).to.contain( "<p>&copy;&amp;&trade;</p>" );
+        } );
+
+        it( "<!-- comment -->", function(){
+            expect( values.main ).to.contain( "<!-- comment -->" );
+        } );
+
+        it( "&lt;!-- not comment --&gt;", function(){
+            expect( values.main ).to.contain( "&lt;!-- not comment --&gt;" );
         } );
     } );
 

@@ -66,34 +66,43 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
 
             describe( "プレースホルダ", function(){
 
-                it( "<!-- TemplateBeginEditable --> 〜 <!-- TemplateEndEditable -->", function(){
-                    expect( template.convertToTemplateFormat(
-                        '<!-- TemplateBeginEditable name="main" --><!-- TemplateEndEditable -->'
-                    ) ).to.equal( '<!-- InstanceBeginEditable name="main" --><% if( typeof main !== \'undefined\' ){ %><%= main %><% } else { %><%= __default__.main %><% } %><!-- InstanceEndEditable -->' );
+                describe( "<!-- TemplateBeginEditable --> 〜 <!-- TemplateEndEditable -->", function(){
 
-                    expect( template.convertToTemplateFormat(
-                        [
-                            '<!-- TemplateBeginEditable name="main" -->\n\t hoge main \n\t<!-- TemplateEndEditable -->',
-                            '<!-- TemplateBeginEditable name="sub" -->\n\t hoge sub \n\t<!-- TemplateEndEditable -->'
-                        ].join( "" )
-                    ) ).to.equal( [
-                            '<!-- InstanceBeginEditable name="main" --><% if( typeof main !== \'undefined\' ){ %><%= main %><% } else { %><%= __default__.main %><% } %><!-- InstanceEndEditable -->',
-                            '<!-- InstanceBeginEditable name="sub" --><% if( typeof sub !== \'undefined\' ){ %><%= sub %><% } else { %><%= __default__.sub %><% } %><!-- InstanceEndEditable -->'
-                        ].join( "" ) );
+                    it( "ひとつのEditable領域", function(){
+                        expect( template.convertToTemplateFormat(
+                            '<!-- TemplateBeginEditable name="main" --><!-- TemplateEndEditable -->'
+                        ) ).to.equal( '<!-- InstanceBeginEditable name="main" --><% if( typeof main !== \'undefined\' ){ %><%= main %><% } else { %><%= __default__.main %><% } %><!-- InstanceEndEditable -->' );
+                    } );
 
-                    expect( template.convertToTemplateFormat(
-                        [
-                            '<!-- InstanceBeginEditable name="doc_info" -->',
-                            '<!-- TemplateBeginEditable name="doc_info" -->',
-                            '<title>Document</title>',
-                            '<!-- TemplateEndEditable -->',
-                            '<!-- InstanceEndEditable -->'
-                        ].join( "" )
-                    ) ).to.equal( [
-                            '<!-- InstanceBeginEditable name="doc_info" -->',
-                            '<% if( typeof doc_info !== \'undefined\' ){ %><%= doc_info %><% } else { %><%= __default__.doc_info %><% } %>',
-                            '<!-- InstanceEndEditable -->'
-                        ].join( "" ) );
+                    it( "複数のEditable領域", function(){
+                        expect( template.convertToTemplateFormat(
+                            [
+                                '<!-- TemplateBeginEditable name="main" -->\n\t hoge main \n\t<!-- TemplateEndEditable -->',
+                                '<!-- TemplateBeginEditable name="sub" -->\n\t hoge sub \n\t<!-- TemplateEndEditable -->'
+                            ].join( "" )
+                        ) ).to.equal( [
+                                '<!-- InstanceBeginEditable name="main" --><% if( typeof main !== \'undefined\' ){ %><%= main %><% } else { %><%= __default__.main %><% } %><!-- InstanceEndEditable -->',
+                                '<!-- InstanceBeginEditable name="sub" --><% if( typeof sub !== \'undefined\' ){ %><%= sub %><% } else { %><%= __default__.sub %><% } %><!-- InstanceEndEditable -->'
+                            ].join( "" ) );
+                    } );
+
+                    it( "Editable領域の入れ子", function(){
+                        expect( template.convertToTemplateFormat(
+                            [
+                                '<!-- InstanceBeginEditable name="doc_info" -->',
+                                'common',
+                                '<!-- TemplateBeginEditable name="doc_info" -->',
+                                '<title>Document</title>',
+                                '<!-- TemplateEndEditable -->',
+                                '<!-- InstanceEndEditable -->'
+                            ].join( "" )
+                        ) ).to.equal( [
+                                'common',
+                                '<!-- InstanceBeginEditable name="doc_info" -->',
+                                '<% if( typeof doc_info !== \'undefined\' ){ %><%= doc_info %><% } else { %><%= __default__.doc_info %><% } %>',
+                                '<!-- InstanceEndEditable -->'
+                            ].join( "" ) );
+                    } );
                 } );
             } );
 
