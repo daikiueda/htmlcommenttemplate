@@ -15,6 +15,12 @@ htmlcommenttemplate( pathToTemplatesDir )( pathToHTMLFile(s) );
 ```
 
 __returns__ promise instance object( Q promise - http://documentup.com/kriskowal/q/ )
+```JavaScript
+var updating = htmlcommenttemplate( pathToTemplatesDir )( pathToHTMLFile(s) );
+updating.then( function( result ){
+    result.success // []string (path of updated file)
+} );
+```
 
 ## Example
 
