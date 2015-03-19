@@ -1,6 +1,6 @@
 "use strict";
 
-var EOL = require('os').EOL,
+var EOL = require( "os" ).EOL,
     expect = require( "chai" ).expect,
     fs = require( "fs" ),
     utils = require( "../utils.js" ),

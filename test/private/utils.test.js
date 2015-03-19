@@ -49,19 +49,19 @@ describe( "private / utils", function(){
         } );
     } );
 
-    describe( "excludeInstanceTags", function(){
-
-        var excludeInstanceTags = utils.excludeInstanceTags;
-
-        describe( "<!-- Instance〜 -->を除外したコードを返却する。", function(){
-
-            it( '<!-- InstanceEndEditable -->', function(){
-                expect( excludeInstanceTags( '<!-- InstanceEndEditable -->' ) ).to.equal( "" );
-            } );
-
-            it( '<!-- InstanceBeginEditable name="***" -->', function(){
-                expect( excludeInstanceTags( '<!-- InstanceBeginEditable name="main" -->' ) ).to.equal( "" );
-            } );
-        } );
-    } );
+    //describe( "excludeInstanceTags", function(){
+    //
+    //    var excludeInstanceTags = utils.excludeInstanceTags;
+    //
+    //    describe( "<!-- Instance〜 -->を除外したコードを返却する。", function(){
+    //
+    //        it( '<!-- InstanceEndEditable -->', function(){
+    //            expect( excludeInstanceTags( '<!-- InstanceEndEditable -->' ) ).to.equal( "" );
+    //        } );
+    //
+    //        it( '<!-- InstanceBeginEditable name="***" -->', function(){
+    //            expect( excludeInstanceTags( '<!-- InstanceBeginEditable name="main" -->' ) ).to.equal( "" );
+    //        } );
+    //    } );
+    //} );
 } );

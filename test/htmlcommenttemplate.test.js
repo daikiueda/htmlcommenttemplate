@@ -11,14 +11,14 @@ describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", funct
     var testTemplateDirPath = "./.tmp/utf8/Templates",
         updatedHTMLFileContent,
         returns,
-        promise_results;
+        promiseResults;
 
     before( function( done ){
         utils.prepareSampleFiles();
         returns = htmlcommenttemplate( testTemplateDirPath )( "./.tmp/utf8/htdocs/**/*.html" );
         returns
             .done( function( results ){
-                promise_results = results;
+                promiseResults = results;
                 fs.readFile( "./.tmp/utf8/htdocs/sub_dir/sub_sub_dir/index.html", "utf-8", function( err, data ){
                     if( err ){
                         done();
@@ -79,10 +79,10 @@ describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", funct
             expect( returns ).to.have.property( "fail" );
         } );
         it( "promiseオブジェクトは、resolve時に更新ファイルの一覧を渡す。", function(){
-            expect( promise_results ).to.have.property( "success" );
-            expect( promise_results ).to.have.property( "error" );
+            expect( promiseResults ).to.have.property( "success" );
+            expect( promiseResults ).to.have.property( "error" );
 
-            expect( promise_results.success ).to.deep.equal( [
+            expect( promiseResults.success ).to.deep.equal( [
                 "./.tmp/utf8/htdocs/index.html",
                 "./.tmp/utf8/htdocs/sub_dir/index.html",
                 "./.tmp/utf8/htdocs/sub_dir/sub_sub_dir/index.html"
