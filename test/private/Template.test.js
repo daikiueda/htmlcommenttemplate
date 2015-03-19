@@ -151,7 +151,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                             ].join( "" ) );
                     } );
 
-                    it( "Editable領域の入れ子", function(){
+                    it( "Editable領域の入れ子（同名）", function(){
                         expect( template.convertToTemplateFormat(
                             [
                                 '<!-- InstanceBeginEditable name="doc_info" -->',
@@ -165,6 +165,30 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                                 'common',
                                 '<!-- InstanceBeginEditable name="doc_info" -->',
                                 '<% if( typeof doc_info !== \'undefined\' ){ %><%= doc_info %><% } else { %><%= __default__.doc_info %><% } %>',
+                                '<!-- InstanceEndEditable -->'
+                            ].join( "" ) );
+                    } );
+
+                    it( "Editable領域の入れ子（別名）", function(){
+                        expect( template.convertToTemplateFormat(
+                            [
+                                '<!-- InstanceBeginEditable name="doc_info" -->',
+                                'common',
+                                '<!-- TemplateBeginEditable name="main" -->',
+                                '<title>MAIN</title>',
+                                '<!-- TemplateEndEditable -->',
+                                '<!-- TemplateBeginEditable name="sub" -->',
+                                '<title>SUB</title>',
+                                '<!-- TemplateEndEditable -->',
+                                '<!-- InstanceEndEditable -->'
+                            ].join( "" )
+                        ) ).to.equal( [
+                                'common',
+                                '<!-- InstanceBeginEditable name="main" -->',
+                                '<% if( typeof main !== \'undefined\' ){ %><%= main %><% } else { %><%= __default__.main %><% } %>',
+                                '<!-- InstanceEndEditable -->',
+                                '<!-- InstanceBeginEditable name="sub" -->',
+                                '<% if( typeof sub !== \'undefined\' ){ %><%= sub %><% } else { %><%= __default__.sub %><% } %>',
                                 '<!-- InstanceEndEditable -->'
                             ].join( "" ) );
                     } );
