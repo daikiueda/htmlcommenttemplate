@@ -8,7 +8,7 @@ var expect = require( "chai" ).expect,
 describe( "private / Templates ＜テンプレートの操作を管理するクラス＞", function(){
 
     var testTemplateId = "/Templates/base.tmpl",
-        testTemplateFilePath = "./.tmp/sample_files/Templates/base.tmpl";
+        testTemplateFilePath = "./.tmp/utf8/Templates/base.tmpl";
 
     before( utils.prepareSampleFiles );
     after( utils.deleteSampleFiles );
@@ -259,7 +259,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                 .then( function( template ){
                     return template.generateCode(
                         { main: "_M_A_I_N_", doc_info: "<title>test result</title>" },
-                        "./.tmp/sample_files/htdocs/sub_dir/index.html"
+                        "./.tmp/utf8/htdocs/sub_dir/index.html"
                     );
                 } )
                 .then( function( generatedCode ){

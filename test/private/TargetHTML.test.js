@@ -8,7 +8,7 @@ var EOL = require('os').EOL,
 
 describe( "private / TargetHTML ＜更新対象のHTMLファイルを操作するクラス＞", function(){
 
-    var testHTMLFilePath = "./.tmp/sample_files/htdocs/index.html";
+    var testHTMLFilePath = "./.tmp/utf8/htdocs/index.html";
 
     beforeEach( utils.prepareSampleFiles );
     after( utils.deleteSampleFiles );

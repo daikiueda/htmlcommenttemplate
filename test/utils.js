@@ -5,12 +5,12 @@ var shell = require( "shelljs" );
 
 
 function deleteSampleFiles(){
-    shell.rm( "-rf", ".tmp/sample_files" );
+    shell.rm( "-rf", ".tmp/utf8" );
 }
 
 function prepareSampleFiles(){
     deleteSampleFiles();
-    shell.cp( "-r", "./sample_files", ".tmp" );
+    shell.cp( "-r", "./test/fixtures/utf8", ".tmp" );
 }
 
 

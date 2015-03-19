@@ -8,18 +8,18 @@ var EOL = require( "os" ).EOL,
 
 describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", function(){
 
-    var testTemplateDirPath = "./.tmp/sample_files/Templates",
+    var testTemplateDirPath = "./.tmp/utf8/Templates",
         updatedHTMLFileContent,
         returns,
         promise_results;
 
     before( function( done ){
         utils.prepareSampleFiles();
-        returns = htmlcommenttemplate( testTemplateDirPath )( "./.tmp/sample_files/htdocs/**/*.html" );
+        returns = htmlcommenttemplate( testTemplateDirPath )( "./.tmp/utf8/htdocs/**/*.html" );
         returns
             .done( function( results ){
                 promise_results = results;
-                fs.readFile( "./.tmp/sample_files/htdocs/sub_dir/sub_sub_dir/index.html", "utf-8", function( err, data ){
+                fs.readFile( "./.tmp/utf8/htdocs/sub_dir/sub_sub_dir/index.html", "utf-8", function( err, data ){
                     if( err ){
                         done();
                         return;
@@ -83,9 +83,9 @@ describe( "htmlcommentemplate( pathToTemplatesDir )( pathToHTMLFile(s) )", funct
             expect( promise_results ).to.have.property( "error" );
 
             expect( promise_results.success ).to.deep.equal( [
-                "./.tmp/sample_files/htdocs/index.html",
-                "./.tmp/sample_files/htdocs/sub_dir/index.html",
-                "./.tmp/sample_files/htdocs/sub_dir/sub_sub_dir/index.html"
+                "./.tmp/utf8/htdocs/index.html",
+                "./.tmp/utf8/htdocs/sub_dir/index.html",
+                "./.tmp/utf8/htdocs/sub_dir/sub_sub_dir/index.html"
             ] );
         } );
     } );

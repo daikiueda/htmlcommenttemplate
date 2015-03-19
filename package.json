@@ -4,8 +4,8 @@
   "description": "HTML files updater with Comment format Template Tags. ( like Adobe Dreamweaver )",
   "main": "./lib/htmlcommenttemplate.js",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha --recursive -R spec",
-    "test-cov": "node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --recursive -R spec"
+    "test": "node ./node_modules/mocha/bin/mocha ./test/*.test.js ./test/private/*.test.js -R spec",
+    "test-cov": "node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- ./test/*.test.js ./test/private/*.test.js -R spec"
   },
   "repository": {
     "type": "git",
