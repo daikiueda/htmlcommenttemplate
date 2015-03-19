@@ -7,7 +7,7 @@ var expect = require( "chai" ).expect,
 /*eslint camelcase:0 */
 describe( "private / Templates ＜テンプレートの操作を管理するクラス＞", function(){
 
-    var testTemplateId = "/Templates/base.tmpl",
+    var testTemplateId = "Templates/base.tmpl",
         testTemplateFilePath = "./.tmp/utf8/Templates/base.tmpl";
 
     before( utils.prepareSampleFiles );
@@ -125,7 +125,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                 it( '<html> 〜 </html> -> <html><!-- InstanceBegin template="***" --> 〜 <!-- InstanceEnd --></html>"', function(){
                     expect( template.convertToTemplateFormat(
                         '<html></html>'
-                    ) ).to.equal( '<html><!-- InstanceBegin template="/<%- __templateId__ %>" --><!-- InstanceEnd --></html>' );
+                    ) ).to.equal( '<html><!-- InstanceBegin template="/Templates/base.tmpl" --><!-- InstanceEnd --></html>' );
                 } );
             } );
 
