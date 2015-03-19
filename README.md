@@ -1,5 +1,8 @@
 # htmlcommenttemplate [![Build Status](https://travis-ci.org/daikiueda/htmlcommenttemplate.svg?branch=master)](https://travis-ci.org/daikiueda/htmlcommenttemplate) [![Coverage Status](https://coveralls.io/repos/daikiueda/htmlcommenttemplate/badge.svg?branch=master)](https://coveralls.io/r/daikiueda/htmlcommenttemplate?branch=master) [![Code Climate](https://codeclimate.com/github/daikiueda/htmlcommenttemplate/badges/gpa.svg)](https://codeclimate.com/github/daikiueda/htmlcommenttemplate)
-HTML files updater with Comment format Template Tags. ( like Adobe Dreamweaver )
+
+[![NPM](https://nodei.co/npm/htmlcommenttemplate.png?compact=true)](https://nodei.co/npm/htmlcommenttemplate/)
+
+HTML files updater with Comment format Template Tags.
 
 ## Install
 
