@@ -93,7 +93,7 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
                     } );
 
                     it( "特殊文字も、そのまま抽出できる。", function(){
-                        var testStr = "<p>&copy;&amp;&trade;</p>";
+                        var testStr = "<p>&copy;&#169;&#xA9;©&amp;&trade;</p>";
                         expect( template.pickOutDefaultValues( '<!-- InstanceBeginEditable name="test" -->' + testStr + '<!-- InstanceEndEditable -->' ) )
                             .to.eql( { test: testStr } );
                     } );
