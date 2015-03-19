@@ -138,8 +138,9 @@ index.html
         <meta name="keywords" content="">
         <!-- InstanceEndEditable -->
 
+        <!-- InstanceBeginEditable name="head" -->
         <link rel="stylesheet" href="resources/dummy.css">
-
+        <!-- InstanceEndEditable -->
     </head>
     <body>
 
