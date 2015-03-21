@@ -42,6 +42,14 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
 
         describe( "管理対象のテンプレートファイルから、テンプレートへの適用対象となるデフォルト値を抽出し、オブジェクトとして返却する。", function(){
 
+            describe( "テンプレートの属性", function(){
+                it( "InstanceBegin", function(){
+                    expect( template.pickOutDefaultValues( '<!-- InstanceBegin template="/Templates/base.tmpl" test_attr="test" -->' ) )
+                        .to.have.property( "__template_attr__" )
+                        .and.equal( ' test_attr="test"' );
+                } );
+            } );
+
             describe( "Editable 編集可能領域", function(){
                 it( "TemplateBeginEditable", function(){
                     expect( template.pickOutDefaultValues( '<!-- TemplateBeginEditable name="main" -->MAIN_DEFAULT<!-- TemplateEndEditable -->' ) )
@@ -120,12 +128,12 @@ describe( "private / Templates ＜テンプレートの操作を管理するク�
 
         describe( "与えられたHTMLコードを、テンプレートエンジンで処理できる文字列に変換して、返却する。", function(){
 
-            describe( "テンプレートID", function(){
+            describe( "テンプレートIDと、テンプレートの属性", function(){
 
-                it( '<html> 〜 </html> -> <html><!-- InstanceBegin template="***" --> 〜 <!-- InstanceEnd --></html>"', function(){
+                it( '<html> 〜 </html> -> <html><!-- InstanceBegin template="***" (attr) --> 〜 <!-- InstanceEnd --></html>"', function(){
                     expect( template.convertToTemplateFormat(
                         '<html></html>'
-                    ) ).to.equal( '<html><!-- InstanceBegin template="/Templates/base.tmpl" --><!-- InstanceEnd --></html>' );
+                    ) ).to.match( /<html><!-- InstanceBegin template="\/Templates\/base.tmpl"<%.+%> --><!-- InstanceEnd --><\/html>/ );
                 } );
             } );
 

@@ -6,12 +6,12 @@ var htmlcommenttemplate = require( "../lib/htmlcommenttemplate.js" ),
 
 var utilsForComplexSet = {
     deleteSampleFiles: function(){
-        shell.rm( "-rf", ".tmp/complex" );
+        shell.rm( "-rf", ".tmp/utf8_complex" );
     },
     prepareSampleFiles: function(){
         utilsForComplexSet.deleteSampleFiles();
         shell.mkdir( ".tmp" );
-        shell.cp( "-r", "./test/fixtures/utf8_complex/htdocs", ".tmp/complex" );
+        shell.cp( "-r", "./test/fixtures/utf8_complex/htdocs", ".tmp/utf8_complex" );
     }
 };
 
@@ -24,6 +24,7 @@ describe( "util", function(){
 
     it( "update", function( done ){
         htmlcommenttemplate( "./.tmp/utf8/Templates" )( "./.tmp/utf8/htdocs/**/*.html" )
+            .then( function(){ return htmlcommenttemplate( "./.tmp/complex/htdocs/Templates" )( "./.tmp/complex/htdocs/**/*.html" ); } )
             .done( function(){ done(); } );
     } );
 } );

@@ -73,10 +73,20 @@ describe( "private / TargetHTML ＜更新対象のHTMLファイルを操作す�
             } );
         } );
 
-        it( "管理対象のHTMLファイルから、テンプレートへの適用対象となる内容を抽出し、オブジェクトとして返却する。", function(){
-            expect( values ).to.be.an( "object" );
-            expect( values.main ).to.contain( "<h1>/index.html</h1>" );
-            expect( values.main.split( EOL ) ).to.have.length( 7 );
+        describe( "管理対象のHTMLファイルから、テンプレートへの適用対象となる内容を抽出し、オブジェクトとして返却する。", function(){
+
+            it( "返却値は、オブジェクトである。", function(){
+                expect( values ).to.be.an( "object" );
+            } );
+
+            it( "<!-- InstanceBegin template -->の属性", function(){
+                expect( values.__template_attr__ ).to.equal( ' test_attr="test"' );
+            } );
+
+            it( "InstanceEditable", function(){
+                expect( values.main ).to.contain( "<h1>/index.html</h1>" );
+                expect( values.main.split( EOL ) ).to.have.length( 7 );
+            } );
         } );
 
         describe( "各種の文字列", function(){
